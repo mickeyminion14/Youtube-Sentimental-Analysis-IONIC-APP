@@ -1,0 +1,7 @@
+{
+  "name": "Youtube-Sentimental-Analysis",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
