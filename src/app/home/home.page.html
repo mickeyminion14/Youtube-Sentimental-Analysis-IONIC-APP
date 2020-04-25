@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      Sentimental Analysis
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -14,7 +14,32 @@
   </ion-header>
 
   <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Chart in pink</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <canvas #barChart></canvas>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Chart in orange</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <canvas #barChart1></canvas>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Chart in green</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <canvas #barChart2></canvas>
+      </ion-card-content>
+    </ion-card>
   </div>
 </ion-content>
