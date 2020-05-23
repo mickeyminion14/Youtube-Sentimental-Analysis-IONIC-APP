@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Sentimental Analysis
+    <ion-title style="text-align: center;">
+      Youtube Comment Analysis
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -16,30 +16,60 @@
   <div id="container">
     <ion-card>
       <ion-card-header>
-        <ion-card-title>Chart in pink</ion-card-title>
+        <ion-card-title>Desicion Tree </ion-card-title>
       </ion-card-header>
 
       <ion-card-content>
-        <canvas #barChart></canvas>
+        <canvas id="decision">{{ decisionChart }}</canvas>
+
       </ion-card-content>
     </ion-card>
+
     <ion-card>
       <ion-card-header>
-        <ion-card-title>Chart in orange</ion-card-title>
+        <ion-card-title>Kernal SVC</ion-card-title>
       </ion-card-header>
 
       <ion-card-content>
-        <canvas #barChart1></canvas>
+        <canvas id="kernal_svc">{{ kernal_svcChart }}</canvas>
+
       </ion-card-content>
     </ion-card>
+
     <ion-card>
       <ion-card-header>
-        <ion-card-title>Chart in green</ion-card-title>
+        <ion-card-title>KNN </ion-card-title>
       </ion-card-header>
 
       <ion-card-content>
-        <canvas #barChart2></canvas>
+        <canvas id="knn">{{ knnChart }}</canvas>
+
       </ion-card-content>
     </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Linear Regression</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <canvas id="linear_regression">{{ linear_regressionChart }}</canvas>
+
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Random Forest </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <canvas id="random_forest">{{ random_forestChart }}</canvas>
+
+      </ion-card-content>
+    </ion-card>
+
+
+
   </div>
 </ion-content>

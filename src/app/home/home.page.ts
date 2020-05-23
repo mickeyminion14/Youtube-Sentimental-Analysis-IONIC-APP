@@ -1,5 +1,7 @@
-import { Component, ViewChild } from "@angular/core";
+import { Component } from "@angular/core";
 import { Chart } from "chart.js";
+import { HomeService } from "./home.service";
+import { TitleCasePipe } from "@angular/common";
 
 @Component({
   selector: "app-home",
@@ -7,95 +9,244 @@ import { Chart } from "chart.js";
   styleUrls: ["home.page.scss"],
 })
 export class HomePage {
-  constructor() {}
-  @ViewChild("barChart", { static: false }) barChart;
-  @ViewChild("barChart1", { static: false }) barChart1;
-  @ViewChild("barChart2", { static: false }) barChart2;
+  constructor(
+    private homeService: HomeService,
+    private titleCasePipe: TitleCasePipe
+  ) {}
   bars: any;
-  colorArray: any;
+  decisionChart: any;
+  kernal_svcChart: any;
+  knnChart: any;
+  linear_regressionChart: any;
+  random_forestChart: any;
 
   ionViewDidEnter() {
-    this.createBarChart();
+    this.getGraphData();
   }
 
-  createBarChart() {
-    this.bars = new Chart(this.barChart.nativeElement, {
-      type: "line",
-      data: {
-        labels: ["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8"],
-        datasets: [
-          {
-            label: "Viewers in millions",
-            data: [2.5, 3.8, 5, 6.9, 6.9, 7.5, 10, 17],
-            backgroundColor: "rgb(0,0,0,0)", // array should have same number of elements as number of dataset
-            borderColor: "rgb(255, 204, 255)", // array should have same number of elements as number of dataset
-            borderWidth: 1,
-          },
-        ],
-      },
-      options: {
-        scales: {
-          yAxes: [
-            {
-              ticks: {
-                beginAtZero: true,
-              },
-            },
-          ],
-        },
-      },
+  getGraphData() {
+    this.homeService.getData().subscribe((data: any) => {
+      this.createDecisionChart(data.data.decision_tree);
+      this.createKernelChart(data.data.kernal_svc);
+      this.createKnnChart(data.data.knn);
+      this.createLinearChart(data.data.linear_regression);
+      this.createForestChart(data.data.random_forest);
     });
-    this.bars = new Chart(this.barChart1.nativeElement, {
-      type: "line",
-      data: {
-        labels: ["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8"],
-        datasets: [
-          {
-            label: "Viewers in millions",
-            data: [2.5, 3.8, 5, 6.9, 6.9, 7.5, 10, 17],
-            backgroundColor: "rgb(0,0,0,0)", // array should have same number of elements as number of dataset
-            borderColor: "rgb(255, 128, 0)", // array should have same number of elements as number of dataset
-            borderWidth: 1,
-          },
-        ],
-      },
-      options: {
-        scales: {
-          yAxes: [
-            {
-              ticks: {
-                beginAtZero: true,
-              },
-            },
-          ],
-        },
-      },
+  }
+
+  createDecisionChart(data) {
+    let dataLabels = [];
+    let dataPoints = [];
+
+    let keysArr = Object.keys(data);
+
+    keysArr.forEach((element: string) => {
+      dataLabels.push(this.titleCasePipe.transform(element));
+      dataPoints.push(data[element]);
     });
-    this.bars = new Chart(this.barChart2.nativeElement, {
-      type: "line",
+    console.log(dataLabels, dataPoints);
+    this.decisionChart = new Chart("decision", {
+      type: "doughnut",
+
       data: {
-        labels: ["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8"],
+        labels: [...dataLabels],
+
         datasets: [
           {
-            label: "Viewers in millions",
-            data: [2.5, 3.8, 5, 6.9, 6.9, 7.5, 10, 17],
-            backgroundColor: "rgb(0,0,0,0)", // array should have same number of elements as number of dataset
-            borderColor: "rgb(102, 204, 0)", // array should have same number of elements as number of dataset
-            borderWidth: 1,
+            label: "Total Users",
+            data: [...dataPoints],
+            backgroundColor: [
+              "#F38BDB",
+              "#99FF33",
+              "#FF9999",
+              "#00CCCC",
+              "#FF8000",
+              "#0080FF",
+            ],
+            borderColor: [
+              "rgb(0,0,0,0)",
+              "rgb(0,0,0,0)",
+              "rgb(0,0,0,0)",
+              "rgb(0,0,0,0)",
+              "rgb(0,0,0,0)",
+              "rgb(0,0,0,0)",
+            ],
           },
         ],
       },
-      options: {
-        scales: {
-          yAxes: [
-            {
-              ticks: {
-                beginAtZero: true,
-              },
-            },
-          ],
-        },
+      options: {},
+    });
+  }
+  createKernelChart(data) {
+    let dataLabels = [];
+    let dataPoints = [];
+
+    let keysArr = Object.keys(data);
+
+    keysArr.forEach((element: string) => {
+      dataLabels.push(this.titleCasePipe.transform(element));
+      dataPoints.push(data[element]);
+    });
+    console.log(dataLabels, dataPoints);
+    this.kernal_svcChart = new Chart("kernal_svc", {
+      type: "doughnut",
+
+      data: {
+        labels: [...dataLabels],
+
+        datasets: [
+          {
+            label: "Total Users",
+            data: [...dataPoints],
+            backgroundColor: [
+              "#F38BDB",
+              "#99FF33",
+              "#FF9999",
+              "#00CCCC",
+              "#FF8000",
+              "#0080FF",
+            ],
+            borderColor: [
+              "rgb(0,0,0,0)",
+              "rgb(0,0,0,0)",
+              "rgb(0,0,0,0)",
+              "rgb(0,0,0,0)",
+              "rgb(0,0,0,0)",
+              "rgb(0,0,0,0)",
+            ],
+          },
+        ],
       },
+      options: {},
+    });
+  }
+  createKnnChart(data) {
+    let dataLabels = [];
+    let dataPoints = [];
+
+    let keysArr = Object.keys(data);
+
+    keysArr.forEach((element: string) => {
+      dataLabels.push(this.titleCasePipe.transform(element));
+      dataPoints.push(data[element]);
+    });
+    console.log(dataLabels, dataPoints);
+    this.knnChart = new Chart("knn", {
+      type: "doughnut",
+
+      data: {
+        labels: [...dataLabels],
+
+        datasets: [
+          {
+            label: "Total Users",
+            data: [...dataPoints],
+            backgroundColor: [
+              "#F38BDB",
+              "#99FF33",
+              "#FF9999",
+              "#00CCCC",
+              "#FF8000",
+              "#0080FF",
+            ],
+            borderColor: [
+              "rgb(0,0,0,0)",
+              "rgb(0,0,0,0)",
+              "rgb(0,0,0,0)",
+              "rgb(0,0,0,0)",
+              "rgb(0,0,0,0)",
+              "rgb(0,0,0,0)",
+            ],
+          },
+        ],
+      },
+      options: {},
+    });
+  }
+  createLinearChart(data) {
+    let dataLabels = [];
+    let dataPoints = [];
+
+    let keysArr = Object.keys(data);
+
+    keysArr.forEach((element: string) => {
+      dataLabels.push(this.titleCasePipe.transform(element));
+      dataPoints.push(data[element]);
+    });
+    console.log(dataLabels, dataPoints);
+    this.linear_regressionChart = new Chart("linear_regression", {
+      type: "doughnut",
+
+      data: {
+        labels: [...dataLabels],
+
+        datasets: [
+          {
+            label: "Total Users",
+            data: [...dataPoints],
+            backgroundColor: [
+              "#F38BDB",
+              "#99FF33",
+              "#FF9999",
+              "#00CCCC",
+              "#FF8000",
+              "#0080FF",
+            ],
+            borderColor: [
+              "rgb(0,0,0,0)",
+              "rgb(0,0,0,0)",
+              "rgb(0,0,0,0)",
+              "rgb(0,0,0,0)",
+              "rgb(0,0,0,0)",
+              "rgb(0,0,0,0)",
+            ],
+          },
+        ],
+      },
+      options: {},
+    });
+  }
+  createForestChart(data) {
+    let dataLabels = [];
+    let dataPoints = [];
+
+    let keysArr = Object.keys(data);
+
+    keysArr.forEach((element: string) => {
+      dataLabels.push(this.titleCasePipe.transform(element));
+      dataPoints.push(data[element]);
+    });
+    console.log(dataLabels, dataPoints);
+    this.random_forestChart = new Chart("random_forest", {
+      type: "doughnut",
+
+      data: {
+        labels: [...dataLabels],
+
+        datasets: [
+          {
+            label: "Total Users",
+            data: [...dataPoints],
+            backgroundColor: [
+              "#F38BDB",
+              "#99FF33",
+              "#FF9999",
+              "#00CCCC",
+              "#FF8000",
+              "#0080FF",
+            ],
+            borderColor: [
+              "rgb(0,0,0,0)",
+              "rgb(0,0,0,0)",
+              "rgb(0,0,0,0)",
+              "rgb(0,0,0,0)",
+              "rgb(0,0,0,0)",
+              "rgb(0,0,0,0)",
+            ],
+          },
+        ],
+      },
+      options: {},
     });
   }
 }
